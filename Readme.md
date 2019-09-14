@@ -9,16 +9,16 @@ at binabhdevkota@gmail.com
 # Getting Started and usage #
 
 ## Requirements ##
-*Python 3.x
-*Continuous good internet connection
+* Python 3.x
+* Continuous good internet connection
 
 ## Libraries to be installed ##
-*Georinex
-*pymap3d
-*matplotlib
-*scipy
-*tkcalender
-*wget
-*unzlw
-*pandas
-*ftplib
+* Georinex
+* pymap3d
+* matplotlib
+* scipy
+* tkcalender
+* wget
+* unzlw
+* pandas
+* ftplib
