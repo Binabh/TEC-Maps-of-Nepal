@@ -14,11 +14,18 @@ at binabhdevkota@gmail.com
 
 ## Libraries to be installed ##
 * Georinex
+`pip install georinex`
 * pymap3d
+`pip install pymap3d`
 * matplotlib
+`pip install matplotlib`
 * scipy
+`pip install scipy`
 * tkcalender
+`pip install tkcalendar`
 * wget
+`pip install wget`
 * unzlw
+`pip install git+https://github.com/umeat/unlzw.git`
 * pandas
-* ftplib
+`pip install pandas`
