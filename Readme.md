@@ -33,3 +33,20 @@ at binabhdevkota@gmail.com
 `pip install git+https://github.com/umeat/unlzw.git`
 * pandas
 `pip install pandas`
+
+## Running the tool
+
+After fulfilling all the requirements and installing all the required libraries you need to run the **main.py** script and the tool should start guving you the interface as shown in the screen captures then you are good to go.
+The tool automatically downloads given the date and the stations. The data is downloaded from the
+[Named Link](http://www.unavco.org "UNAVCO website").
+
+After downloading processing is done to generate TEC values for given time frame and given interval. After the processing is done one can easity generate the TEC maps. The generated TEC maps are in the form of matplotlib animation and IONEX file. The IONEX file is stored in `./data/<Year>/<dayofyear>` as .xxi file. it is also the location where all other data for that particular day are stored.
+
+## Things to consider
+
+There can be problems in the tool due to following reasons:
+
+* Internet is not available.
+* There is old data in the directory.
+
+In these cases try re-running the tool with good internet connection and clearing all previous data if generating TEC map for same day is giving problems.
