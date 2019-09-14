@@ -4,11 +4,13 @@ import numpy as np
 import pymap3d as pm
 import glob
 
+#getting satellite elevation and azimuth
 def getsatElev(recposgeo,satpos):
 	slat,slon,shei= pm.ecef2geodetic(satpos[0], satpos[1], satpos[2], deg=True)
 	az,el,r = pm.geodetic2aer(slat, slon, shei, recposgeo[0], recposgeo[1], recposgeo[2], deg=True)
 	return (el,az)
 
+#Getting vertical TEC values using a mapping function
 def getVTEC(stec,elev):
 	rofearth = 6371000
 	hofip = 400000
@@ -16,6 +18,7 @@ def getVTEC(stec,elev):
 	vtec = stec*mapfunc
 	return vtec
 
+#getting lat and lon of IPP
 def getIPPLattLon(recvpos,eleaz):
 	rofearth = 6371000
 	hofip = 400000
@@ -103,7 +106,6 @@ def solveIter(mu,e):
 	__solvIter returns an iterative solution for Ek
 	Mk = Ek - e sin(Ek)
 	adapted to accept vectors instead of single values
-	from Bill Rideout's tec.py
 	"""
 	thisStart = mu-1.01*e
 	thisEnd = mu + 1.01*e

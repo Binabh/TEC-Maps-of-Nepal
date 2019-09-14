@@ -18,13 +18,19 @@ import time
 import matplotlib.animation as animation
 from ftplib import FTP
 
+# List of selected stations
 selected = []
+
+# We get these values from calendar selection and stored here as global
+#variables as are used by many functions
 dayyofyear = ''
 stringdate = ''
 
 #Providing interface to select the GPS stations
 def selectstns():
+    #This is for threading
     def run():
+        #When done button is clicked
         def on_click():
             for station, intvar in zip(stations, intvars):
                 if intvar.get() == 1 and not station in selected:
@@ -33,16 +39,20 @@ def selectstns():
                     selected.remove(station)
             master.destroy()
 
+        #Creating the station selection window
         master = tkinter.Tk()
         master.title("Select Stations")
         mydict = {}
+        #Reading the stations csv file
         reader = csv.reader(open('stations.csv','r'))
         header = next(reader)
+        #Making a dictionary out of csv file
         for row in reader:
             mydict[row[0].lower()] = {header[1]:row[1],header[2]:row[2],header[3]:row[3],header[4]:row[4],header[5]:row[5]}
         stations = mydict.keys()
         intvars = []
         checkbuttons = []
+        #Making the check buttons
         for station in stations:
             intvar = tkinter.IntVar(master)
             if station in selected:
@@ -61,24 +71,30 @@ def selectstns():
 
 #For plotting and visualizing the data
 def plotter():
+    #Directory leading to day of year where all data is stored
     dirpath='data\\'+stringdate[0:4]+'\\'+dayyofyear
     filepath = dirpath+'\\TECValues.csv'
     mydateparser = lambda x: pd.datetime.strptime(x, "%d-%b-%Y (%H:%M:%S)")
     dataframe = pd.read_csv(filepath, parse_dates=['Datetime'],date_parser=mydateparser)
+    #Writing IONEX file from the dataframe
     writeionex(dataframe,dirpath)
     timelist = dataframe['Datetime'].tolist()
     timelist = set(timelist)
     timelist = sorted(timelist)
+    #Initializing the figure
     f = plt.figure()
+    #Function to animate TEC Maps
     def animate(i):
         f.clear()
         ax = plt.subplot(1,1,1)
+        #Filtering the dataset for the given timeframe
         subdataframe = dataframe.loc[dataframe['Datetime'] == timelist[i]]
         y = subdataframe['lat'].to_numpy()
         x = subdataframe['lon'].to_numpy()
         z = subdataframe['verticaltec'].to_numpy()
         xi = np.linspace(80,89,20)
         yi = np.linspace(26,31,12)
+        #Interpolating over the grid
         zi = griddata((x, y), z, (xi[None,:], yi[:,None]), method='linear',rescale=True)
         cf = ax.contourf(xi,yi,zi,levels=20,cmap='gist_rainbow',alpha=0.3,antialiased=True)
         ax.set(xlim=(80, 89), ylim=(26, 31))
@@ -92,14 +108,15 @@ def plotter():
         return ax
 
     ani = animation.FuncAnimation(f,animate,len(timelist),interval=1*1e+3,blit=False)
-    #f.colorbar(cf, ax=ax)
     plt.show()
 
 #Download DCB files from CODE
 def getdcbfiles(stringdate,dirpath):
+    #FTP login to CODE website
     ftp = FTP('ftp.aiub.unibe.ch')
     ftp.login('anonymous','anonymous')
     ftp.cwd('/CODE/'+stringdate[0:4])
+    #The downloading mechanism
     downfilestr1='RETR P1C1'+stringdate[2:4]+stringdate[5:7]+'.DCB.Z'
     downfilestr2='RETR P1P2'+stringdate[2:4]+stringdate[5:7]+'.DCB.Z'
     filestr1 = dirpath+'\\P1C1'+stringdate[2:4]+stringdate[5:7]+'.DCB.Z'
@@ -127,6 +144,7 @@ def downloaddata():
     stringdate = str(cal.get_date()) #2019-09-02
     i = 0
     dirpath = 'data\\'+stringdate[0:4]+'\\'+dayyofyear
+    #Downloading files from UNAVCO website
     for each in selected:
         statuslabel.config (text="Dowloading data of:"+each)
         progressbar['value']=((i/len(selected))*100)
@@ -151,6 +169,7 @@ def downloaddata():
 #Processing the GPS data and getting the CSV file out of it
 def process():
     def subfunction():
+        #Processing happens here
         starttime = stringdate+"T"+str(starthourvar.get())+':'+str(startminvar.get())
         stoptime = stringdate+"T"+str(stophourvar.get())+':'+str(stopminvar.get())+':45'
         timegap = gaptimevar.get()
@@ -161,6 +180,7 @@ def process():
         progressbar['value']=0
         statuslabel.config (text='Decompressing Files')
         root.update()
+        #Decompressing the files
         decompressnav(navfiles)
         decompressobs(obsfiles)
         decompressdcb(dcbfiles)
@@ -169,6 +189,7 @@ def process():
         satdcbsintecu = {}
         p1c1dcbfile = open(dirpath+'\\P1C1'+stringdate[2:4]+stringdate[5:7]+'.DCB','r').readlines()[7:39]
         p1p2dcbfile = open(dirpath+'\\P1P2'+stringdate[2:4]+stringdate[5:7]+'.DCB','r').readlines()[7:39]
+        #Creating dictionary for DCB values
         for line1,line2 in zip(p1c1dcbfile,p1p2dcbfile):
             satdcbsintecu[line1.split()[0]]=(float(line1.split()[1])+float(line2.split()[1]))*2.85
         dotofiles = glob.glob(dirpath+'\\'+'*.'+stringdate[2:4]+'o')
@@ -181,6 +202,7 @@ def process():
             i=i+1
             statuslabel.config(text="Processing file:"+obs)
             root.update()
+            #Getting processed data using nav, obs and dcb data
             csvdata = driver(obs,nav,starttime,stoptime,timegap,satdcbsintecu)
             csvfile.write(csvdata)
         csvfile.close()
