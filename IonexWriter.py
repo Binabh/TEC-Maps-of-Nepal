@@ -17,7 +17,7 @@ University                                                  DESCRIPTION
 Contact address: binabhdevkota@gmail.com                    DESCRIPTION                  
   {start}                   EPOCH OF FIRST MAP  
   {end}                   EPOCH OF LAST MAP   
-  {interval}                                                      INTERVAL            
+  {interval}                                                    INTERVAL            
     {nofmaps}                                                      # OF MAPS IN FILE
     COSZ                                                    MAPPING FUNCTION
      0.0                                                    ELEVATION CUTOFF          

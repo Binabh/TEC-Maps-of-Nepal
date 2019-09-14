@@ -3,3 +3,6 @@ data
 
 #Ignore VS code files
 .vscode
+
+#Ignore pycache
+__pycache__
