@@ -49,5 +49,6 @@ There can be problems in the tool due to following reasons:
 
 * Internet is not available.
 * There is old data in the directory.
+* If animation is not working while using spyder or Ipython IDE then please consider looking [here](https://stackoverflow.com/questions/35856079/animation-from-matplotlib-not-working-in-spyder "Stack Overflow") for solution. This might help. We are working more easy solutions.
 
 In these cases try re-running the tool with good internet connection and clearing all previous data if generating TEC map for same day is giving problems.

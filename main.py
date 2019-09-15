@@ -106,7 +106,6 @@ def plotter():
         cbar.ax.set_ylabel('TECU [10^16 electrons/sq. m]', rotation=270,labelpad=10)
         #plt.savefig(timelist[i].strftime("%d-%b-%Y (%H-%M-%S)")+'.png',bbox_inches='tight')
         return ax
-
     ani = animation.FuncAnimation(f,animate,len(timelist),interval=1*1e+3,blit=False)
     plt.show()
 
