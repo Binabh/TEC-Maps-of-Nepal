@@ -39,7 +39,7 @@ Make sure that you have **git installed and added to your path.** It can be down
 
 After fulfilling all the requirements and installing all the required libraries you need to run the **main.py** script and the tool should start guving you the interface as shown in the screen captures then you are good to go.
 The tool automatically downloads given the date and the stations. The data is downloaded from the
-[UNAVCO Website](http://www.unavco.org "UNAVCO website"). Also for monthly DCB values of satellite Bias is downloaded from CODE's website.
+[UNAVCO Website](http://www.unavco.org "UNAVCO website"). Also for monthly DCB values of satellite Bias is downloaded from CODE's website. The data policy for data usage from UNAVCO is available [here](https://www.unavco.org/community/policies_forms/data-policy/data-policy.html "UNAVCO data usage policy"). Users of this tool are requested to hava a look throughly and make sure to be aware about them.
 
 After downloading processing is done to generate TEC values for given time frame and given interval. After the processing is done one can easity generate the TEC maps. The generated TEC maps are in the form of matplotlib animation and IONEX file. The IONEX file is stored in `./data/<Year>/<dayofyear>` as .xxi file. it is also the location where all other data for that particular day are stored.
 
