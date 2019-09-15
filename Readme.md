@@ -31,6 +31,7 @@ at binabhdevkota@gmail.com
 `pip install wget`
 * unzlw
 `pip install git+https://github.com/umeat/unlzw.git`
+Make sure that you have **git installed and added to your path.** It can be downloaded from the [GIT website](https://git-scm.com/downloads "GIT website").
 * pandas
 `pip install pandas`
 
