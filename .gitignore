@@ -6,3 +6,6 @@ data
 
 #Ignore pycache
 __pycache__
+
+#Ignore enviroment
+enviroment
