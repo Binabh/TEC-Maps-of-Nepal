@@ -8,4 +8,4 @@ data
 __pycache__
 
 #Ignore enviroment
-enviroment
+venv
