@@ -11,7 +11,7 @@ matplotlib==3.3.0
 mccabe==0.6.1
 numpy==1.19.1
 pandas==1.1.0
-Pillow==8.1.1
+Pillow==9.0.0
 pycodestyle==2.6.0
 pylint==2.5.3
 pymap3d==2.4.1
